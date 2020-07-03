@@ -34,10 +34,20 @@ const handlerHeroes = async (req: NextApiRequest, res: NextApiResponse) => {
     endDataHeroesRotation
   );
 
+  const parsedData = JSON.parse(heroes);
+  const parsedHeroesRotationData = JSON.parse(heroesRotation) as string[];
+
+  const heroesToReturn = parsedData.map((heroItem) => {
+    return {
+      ...heroItem,
+      isInRotation: parsedHeroesRotationData.includes(heroItem.slug),
+    };
+  });
+
   res.statusCode = 200;
   res.json({
-    heroes: JSON.parse(heroes),
-    heroesRotation: JSON.parse(heroesRotation),
+    heroes: heroesToReturn,
+    heroesRotation: parsedHeroesRotationData,
   });
 };
 
