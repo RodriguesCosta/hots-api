@@ -44,6 +44,7 @@ const handlerHeroes = async (req: NextApiRequest, res: NextApiResponse) => {
       slug: heroItem.slug,
       expandedRole: heroItem.expandedRole,
       franchise: heroItem.franchise,
+      circleIcon: heroItem.circleIcon,
     };
   });
 
