@@ -30,7 +30,7 @@ export const Home = (): JSX.Element => {
         <Col span={4}></Col>
         <Col span={16}>
           <a
-            href="https://vercel.com/?utm_source=brasilapi"
+            href="https://vercel.com/?utm_source=hots-api"
             target="_blank"
             rel="noreferrer"
           >
