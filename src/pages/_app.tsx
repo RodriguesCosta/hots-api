@@ -1,5 +1,12 @@
 import 'antd/dist/antd.css';
 
-export default function StreamToolLive({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+import GlobalStyle from '../styles/global';
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </>
+  );
 }
