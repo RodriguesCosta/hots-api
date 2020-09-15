@@ -10,6 +10,7 @@ export const Container = styled.div<ContainerProps>`
   height: 161px;
   margin: 10px 10px 0px 10px;
   flex-direction: column;
+  cursor: pointer;
 
   ${(props) =>
     props.isFiltered &&
