@@ -8,9 +8,16 @@ export const Container = styled.div`
   min-height: 100vh;
   flex-direction: column;
   position: relative;
+  overflow-x: hidden;
 
-  > img {
+  > section {
+    overflow: hidden;
+    width: 1400px;
     margin: 0 auto;
+
+    > img {
+      margin: 0 auto;
+    }
   }
 `;
 

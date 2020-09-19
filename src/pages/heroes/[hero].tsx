@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { NextPage, GetServerSideProps } from 'next';
+import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 
 import { HeroData } from '../../@types/heroes';
 
@@ -11,9 +12,9 @@ interface PageProps {
   heroData: HeroData;
 }
 
-export const getServerSideProps: GetServerSideProps = async (req) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   try {
-    const { hero } = req.query;
+    const { hero } = context.params;
 
     const { data } = await api.get(`api/heroes/${hero}`);
 
@@ -27,13 +28,36 @@ export const getServerSideProps: GetServerSideProps = async (req) => {
   }
 };
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await api.get('/api/heroes-simple-list');
+
+  const paths = data.heroes.map((hero) => {
+    return {
+      params: { hero: hero.slug },
+    };
+  });
+
+  return {
+    paths: paths,
+    fallback: true,
+  };
+};
+
 const HeroPage: NextPage<PageProps> = ({ heroData }) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <Container>
-      <img
-        src={`https://static.heroesofthestorm.com/heroes/${heroData.slug}/skins/${heroData.skin.slug}.jpg`}
-        alt={heroData.name}
-      />
+      <section>
+        <img
+          src={`https://static.heroesofthestorm.com/heroes/${heroData.slug}/skins/${heroData.skin.slug}.jpg`}
+          alt={heroData.name}
+        />
+      </section>
 
       <HeaderData>
         <img

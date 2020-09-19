@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { NextPage, GetServerSideProps } from 'next';
+import { NextPage, GetStaticProps } from 'next';
+import Head from 'next/head';
 
 import { HeroData } from '../@types/heroes';
 import HeroCircleIcon from '../components/HeroCircleIcon';
@@ -34,9 +35,9 @@ interface PageProps {
   heroesData: HeroData[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
-    const { data } = await api.get('api/heroes-simple-list');
+    const { data } = await api.get('/api/heroes-simple-list');
 
     return {
       props: {
@@ -195,62 +196,68 @@ export const Home: NextPage<PageProps> = ({ heroesData }) => {
   }, [heroesData, currentRoles, currentUniverses]);
 
   return (
-    <Container>
-      <LogoHeroes />
-      <ContainerRow>
-        <div>
-          <FilterTitle>FUNÇÃO:</FilterTitle>
-          <ContainerFilter>
-            {roles.map((role) => (
-              <FilterButton
-                key={role}
-                onClick={() => {
-                  setCurrentRoles(role.split(':')[0]);
-                }}
-                title={role.split(':')[0]}
-              >
-                {getRoleType(
-                  role.split(':')[0],
-                  role.split(':')[0] === currentRoles ? '#FFF' : '#9c9c9c'
-                )}
-              </FilterButton>
-            ))}
-          </ContainerFilter>
-        </div>
+    <>
+      <Head>
+        <title>HOTS - Heroes of the Storm</title>
+      </Head>
 
-        <div>
-          <FilterTitle>UNIVERSO:</FilterTitle>
-          <ContainerFilter>
-            {universes.map((universe) => (
-              <FilterButton
-                key={universe}
-                onClick={() => {
-                  setCurrentUniverses(universe.split(':')[1]);
-                }}
-                title={universe.split(':')[1]}
-              >
-                {getUniverseType(
-                  universe.split(':')[0],
-                  universe.split(':')[1] === currentUniverses
-                    ? '#FFFFFF'
-                    : '#9c9c9c'
-                )}
-              </FilterButton>
-            ))}
-          </ContainerFilter>
-        </div>
-      </ContainerRow>
+      <Container>
+        <LogoHeroes />
+        <ContainerRow>
+          <div>
+            <FilterTitle>FUNÇÃO:</FilterTitle>
+            <ContainerFilter>
+              {roles.map((role) => (
+                <FilterButton
+                  key={role}
+                  onClick={() => {
+                    setCurrentRoles(role.split(':')[0]);
+                  }}
+                  title={role.split(':')[0]}
+                >
+                  {getRoleType(
+                    role.split(':')[0],
+                    role.split(':')[0] === currentRoles ? '#FFF' : '#9c9c9c'
+                  )}
+                </FilterButton>
+              ))}
+            </ContainerFilter>
+          </div>
 
-      <ContainerScroll>
-        {listHerosShow.length === 0
-          ? heroesData.map((heroItem) => (
-              <HeroCircleIcon key={heroItem.slug} heroData={heroItem} />
-            ))
-          : listHerosShow.map((heroItem) => (
-              <HeroCircleIcon key={heroItem.slug} heroData={heroItem} />
-            ))}
-      </ContainerScroll>
-    </Container>
+          <div>
+            <FilterTitle>UNIVERSO:</FilterTitle>
+            <ContainerFilter>
+              {universes.map((universe) => (
+                <FilterButton
+                  key={universe}
+                  onClick={() => {
+                    setCurrentUniverses(universe.split(':')[1]);
+                  }}
+                  title={universe.split(':')[1]}
+                >
+                  {getUniverseType(
+                    universe.split(':')[0],
+                    universe.split(':')[1] === currentUniverses
+                      ? '#FFFFFF'
+                      : '#9c9c9c'
+                  )}
+                </FilterButton>
+              ))}
+            </ContainerFilter>
+          </div>
+        </ContainerRow>
+
+        <ContainerScroll>
+          {listHerosShow.length === 0
+            ? heroesData.map((heroItem) => (
+                <HeroCircleIcon key={heroItem.slug} heroData={heroItem} />
+              ))
+            : listHerosShow.map((heroItem) => (
+                <HeroCircleIcon key={heroItem.slug} heroData={heroItem} />
+              ))}
+        </ContainerScroll>
+      </Container>
+    </>
   );
 };
 
