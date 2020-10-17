@@ -25,6 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: {
         heroData: data,
       },
+      revalidate: 600,
     };
   } catch (err) {
     console.error(err);

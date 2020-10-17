@@ -43,6 +43,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         heroesData: data.heroes,
       },
+      revalidate: 600,
     };
   } catch (err) {
     console.error(err);
