@@ -28,7 +28,7 @@
     "@ant-design/icons": "^4.2.1",
     "@next/bundle-analyzer": "^9.4.4",
     "antd": "^4.3.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.13.0",
     "cheerio": "^1.0.0-rc.3",
     "micro-cors": "^0.1.1",
